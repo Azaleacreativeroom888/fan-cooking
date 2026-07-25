@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>にっき | 台所の記録帳</title>
+<meta name="description" content="毎日の食卓と、うまくいった料理・いかなかった料理の記録。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Shippori+Mincho:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --marigold: #E7A23B;
+    --marigold-deep: #C97F1E;
+    --cream: #FBF3E1;
+    --cream-deep: #F3E6C8;
+    --ink: #3E2E1E;
+    --ink-soft: #6B5842;
+    --herb: #7C8C5A;
+    --herb-deep: #5E6E3F;
+    --paper: #FFFDF7;
+    --line: rgba(62,46,30,0.14);
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Noto Sans JP', sans-serif;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,h2,h3,.brand{ font-family: 'Zen Maru Gothic', sans-serif; }
+  .serif{ font-family: 'Shippori Mincho', serif; }
+  a{ color: inherit; }
+  img{ max-width:100%; display:block; }
+
+  /* ---------- header ---------- */
+  header{
+    position: sticky; top:0; z-index: 50;
+    background: rgba(251,243,225,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-wrap{
+    max-width: 1080px; margin:0 auto; padding: 14px 24px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{
+    font-weight:900; font-size: 1.25rem; letter-spacing: .02em;
+    display:flex; align-items:center; gap:8px;
+  }
+  .brand .mark{
+    width: 30px; height:30px; border-radius: 50% 50% 50% 6px;
+    background: var(--marigold);
+    display:flex; align-items:center; justify-content:center;
+    font-size: 15px; transform: rotate(-6deg);
+  }
+  nav ul{
+    list-style:none; display:flex; gap: 28px; margin:0; padding:0;
+    font-size: .92rem; font-weight:500;
+  }
+  nav a{ text-decoration:none; color: var(--ink-soft); position:relative; padding-bottom:4px; }
+  nav a:hover{ color: var(--ink); }
+  nav a.current{ color: var(--marigold-deep); font-weight:700; }
+  nav a.current::after{
+    content:""; position:absolute; left:0; right:0; bottom:-2px;
+    height:2px; background: var(--marigold-deep); border-radius: 2px;
+  }
+
+  /* ---------- page head ---------- */
+  .page-head{
+    max-width: 780px; margin: 0 auto; padding: 56px 24px 20px;
+  }
+  .page-head .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:.8rem; color: var(--herb-deep); font-weight:700;
+    background: rgba(124,140,90,0.14); padding: 6px 14px; border-radius: 999px;
+    margin-bottom: 16px;
+  }
+  .page-head .eyebrow::before{ content:"●"; color: var(--herb); font-size:.6rem; }
+  .page-head h1{ font-size: clamp(1.8rem, 3.4vw, 2.3rem); margin: 0 0 12px; }
+  .page-head p{ color: var(--ink-soft); font-size:.96rem; margin:0; max-width: 56ch; }
+
+  /* ---------- filter chips ---------- */
+  .filters{
+    max-width: 780px; margin: 28px auto 0; padding: 0 24px;
+    display:flex; gap:10px; flex-wrap:wrap;
+  }
+  .chip{
+    font-size:.82rem; font-weight:700; padding: 7px 16px; border-radius: 999px;
+    border: 1.5px solid var(--line); background: var(--paper); color: var(--ink-soft);
+    text-decoration:none;
+  }
+  .chip.active{ background: var(--marigold); color: var(--paper); border-color: var(--marigold-deep); }
+  .chip:hover{ border-color: var(--ink-soft); }
+
+  /* ---------- diary list ---------- */
+  .diary{ max-width: 780px; margin: 0 auto; padding: 44px 24px 100px; }
+  .entry{
+    padding: 30px 0; border-bottom: 1px solid var(--line);
+    display:grid; grid-template-columns: 96px 1fr; gap: 26px;
+  }
+  .entry:first-child{ padding-top: 0; }
+  .entry .when{
+    font-family:'Shippori Mincho', serif; color: var(--herb-deep);
+  }
+  .entry .when .day{ font-size: 1.7rem; font-weight:600; line-height:1; display:block; }
+  .entry .when .ym{ font-size: .78rem; color: var(--ink-soft); display:block; margin-top: 4px; }
+  .entry h2{
+    font-size: 1.08rem; margin: 0 0 10px;
+  }
+  .entry .stars{ color: var(--marigold-deep); font-size:.8rem; margin-left: 8px; letter-spacing: 1px; }
+  .entry p{ font-size:.92rem; color: var(--ink-soft); margin: 0; }
+  .entry .tag-row{ margin-top: 12px; display:flex; gap:8px; flex-wrap:wrap; }
+  .entry .tag-row span{
+    font-size:.72rem; color: var(--herb-deep); background: rgba(124,140,90,0.12);
+    padding: 3px 10px; border-radius: 999px;
+  }
+
+  .more{
+    display:block; text-align:center; margin: 44px auto 0;
+    font-weight:700; font-size:.92rem; color: var(--marigold-deep); text-decoration:none;
+  }
+  .more:hover{ text-decoration:underline; }
+
+  /* ---------- footer ---------- */
+  footer{ background: var(--ink); color: #D9CBB2; margin-top: 20px; }
+  .footer-wrap{
+    max-width: 1080px; margin:0 auto; padding: 56px 24px 30px;
+    display:grid; grid-template-columns: 1.3fr 1fr 1fr 1.2fr; gap: 40px;
+  }
+  footer h4{ font-family:'Zen Maru Gothic', sans-serif; color: #FBF3E1; font-size:.92rem; margin: 0 0 14px; }
+  footer .brand{ color: #FBF3E1; margin-bottom: 10px; }
+  footer p{ font-size:.85rem; color: #B7A88C; margin: 0 0 14px; }
+  footer ul{ list-style:none; margin:0; padding:0; }
+  footer li{ margin-bottom: 9px; }
+  footer a{ color: #D9CBB2; text-decoration:none; font-size:.86rem; }
+  footer a:hover{ color: var(--marigold); }
+
+  .contact-form{ display:flex; flex-direction:column; gap:10px; }
+  .contact-form input, .contact-form textarea{
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 8px; padding: 10px 12px; color: #FBF3E1; font-family: inherit; font-size:.86rem;
+  }
+  .contact-form textarea{ resize: vertical; min-height: 70px; }
+  .contact-form button{
+    background: var(--marigold); color: var(--ink); border:none; border-radius: 999px;
+    padding: 10px 18px; font-weight:700; font-size:.86rem; cursor:pointer; align-self:flex-start;
+  }
+
+  .legal-strip{
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding: 20px 24px 34px; max-width:1080px; margin:0 auto;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    font-size:.76rem; color: #8D7C60;
+  }
+  .ai-notice{ font-size:.76rem; color:#8D7C60; max-width: 640px; }
+
+  @media (max-width: 880px){
+    nav ul{ display:none; }
+    .footer-wrap{ grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px){
+    .entry{ grid-template-columns: 64px 1fr; gap: 16px; }
+    .entry .when .day{ font-size: 1.3rem; }
+    .footer-wrap{ grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce){ *{ scroll-behavior:auto !important; } }
+
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+    outline: 2px solid var(--herb-deep); outline-offset: 2px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-wrap">
+    <div class="brand"><span class="mark">🍚</span>台所の記録帳</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">きろく</a></li>
+        <li><a href="blog.html" class="current">にっき</a></li>
+        <li><a href="column.html">コラム</a></li>
+        <li><a href="about.html">about</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <div class="page-head">
+    <span class="eyebrow">DIARY</span>
+    <h1>にっき</h1>
+    <p>作った日、材料、うまくいったこと・いかなかったこと。淡々と積み重ねている台所の記録です。</p>
+  </div>
+
+  <div class="filters">
+    <a href="#" class="chip active">すべて</a>
+    <a href="#" class="chip">ごはんもの</a>
+    <a href="#" class="chip">汁物・鍋</a>
+    <a href="#" class="chip">副菜・小鉢</a>
+    <a href="#" class="chip">おやつ</a>
+  </div>
+
+  <div class="diary">
+
+    <article class="entry">
+      <div class="when"><span class="day">20</span><span class="ym">2026.07</span></div>
+      <div>
+        <h2>白菜と豚バラの重ね鍋<span class="stars">★★★★☆</span></h2>
+        <p>だしを昆布と鰹の合わせにしたら味が締まった。白菜は芯側から並べると崩れにくい。次は柚子胡椒を添えたい。</p>
+        <div class="tag-row"><span>汁物・鍋</span><span>作り置き向き</span></div>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="when"><span class="day">16</span><span class="ym">2026.07</span></div>
+      <div>
+        <h2>きのこと栗の炊き込みご飯<span class="stars">★★★★☆</span></h2>
+        <p>塩のタイミングを間違えて炊く前に入れすぎ、少し濃い目になった。栗の甘みとのバランスは次回もう少し塩を控える。</p>
+        <div class="tag-row"><span>ごはんもの</span><span>秋の気配</span></div>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="when"><span class="day">11</span><span class="ym">2026.07</span></div>
+      <div>
+        <h2>鶏むねの南蛮漬け<span class="stars">★★★☆☆</span></h2>
+        <p>衣がべちゃっとしてしまった。油の温度が低かったのだと思う。次は二度揚げにして食感を出したい。</p>
+        <div class="tag-row"><span>副菜・小鉢</span><span>要リベンジ</span></div>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="when"><span class="day">05</span><span class="ym">2026.07</span></div>
+      <div>
+        <h2>枝豆と塩昆布の混ぜご飯<span class="stars">★★★★★</span></h2>
+        <p>思いつきで作ったら大正解。塩昆布の量は思っているより控えめでちょうどいい。定番入り決定。</p>
+        <div class="tag-row"><span>ごはんもの</span><span>時短</span></div>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="when"><span class="day">28</span><span class="ym">2026.06</span></div>
+      <div>
+        <h2>桃のコンポート<span class="stars">★★★★☆</span></h2>
+        <p>皮ごと煮たら色がきれいに出た。シロップの甘さはもう少し控えても良かったかもしれない。</p>
+        <div class="tag-row"><span>おやつ</span><span>季節もの</span></div>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="when"><span class="day">21</span><span class="ym">2026.06</span></div>
+      <div>
+        <h2>冷やし茶碗蒸し<span class="stars">★★★☆☆</span></h2>
+        <p>すが立ってしまった。蒸し器の火加減をもっと弱くするべきだった。夏の定番にしたいので改善したい。</p>
+        <div class="tag-row"><span>副菜・小鉢</span><span>要リベンジ</span></div>
+      </div>
+    </article>
+
+  </div>
+
+  <a href="#" class="more" style="max-width:780px; margin-left:auto; margin-right:auto; display:block; margin-top:-60px; margin-bottom:60px;">もっと見る</a>
+
+</main>
+
+<footer>
+  <div class="footer-wrap">
+    <div>
+      <div class="brand" style="display:flex;align-items:center;gap:8px;font-weight:900;font-size:1.05rem;">
+        <span class="mark" style="width:26px;height:26px;font-size:13px;">🍚</span>台所の記録帳
+      </div>
+      <p>毎日の食卓と、うまくいった料理・いかなかった料理の記録。ひとりぶんの台所ノートです。</p>
+    </div>
+    <div>
+      <h4>ページ</h4>
+      <ul>
+        <li><a href="index.html">きろく（トップ）</a></li>
+        <li><a href="blog.html">にっき</a></li>
+        <li><a href="column.html">コラム</a></li>
+        <li><a href="about.html">about</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>ほかの場所</h4>
+      <ul>
+        <li><a href="https://azaleacreativeroom888.github.io/" target="_blank" rel="noopener">Azalea Creative Room</a></li>
+        <li><a href="https://kakuyomu.jp/" target="_blank" rel="noopener">Kakuyomu（小説）</a></li>
+        <li><a href="https://www.pixiv.net/" target="_blank" rel="noopener">Pixiv（イラスト）</a></li>
+        <li><a href="https://www.youtube.com/" target="_blank" rel="noopener">YouTube（リリポピ）</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>お便り</h4>
+      <form class="contact-form" action="https://formspree.io/f/maqvpvoz" method="POST">
+        <input type="text" name="name" placeholder="お名前" required>
+        <input type="email" name="email" placeholder="メールアドレス" required>
+        <textarea name="message" placeholder="感想や質問など" required></textarea>
+        <button type="submit">送信する</button>
+      </form>
+    </div>
+  </div>
+  <div class="legal-strip">
+    <span>© 2026 台所の記録帳 / Azalea Creative Room</span>
+    <span class="ai-notice">当サイトのテキスト・写真・イラストはAIの学習データとしての利用を禁止します。</span>
+  </div>
+</footer>
+
+</body>
+</html>
