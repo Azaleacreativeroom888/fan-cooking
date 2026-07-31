@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>about | 台所の記録帳</title>
+<meta name="description" content="台所の記録帳について。誰が、どんな気持ちで書いているか。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Shippori+Mincho:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --marigold: #E7A23B;
+    --marigold-deep: #C97F1E;
+    --cream: #FBF3E1;
+    --cream-deep: #F3E6C8;
+    --ink: #3E2E1E;
+    --ink-soft: #6B5842;
+    --herb: #7C8C5A;
+    --herb-deep: #5E6E3F;
+    --paper: #FFFDF7;
+    --line: rgba(62,46,30,0.14);
+    --err: #B25454;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Noto Sans JP', sans-serif;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,h2,h3,.brand{ font-family: 'Zen Maru Gothic', sans-serif; }
+  .serif{ font-family: 'Shippori Mincho', serif; }
+  a{ color: inherit; }
+  img{ max-width:100%; display:block; }
+
+  /* ---------- header ---------- */
+  header{
+    position: sticky; top:0; z-index: 50;
+    background: rgba(251,243,225,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-wrap{
+    max-width: 1080px; margin:0 auto; padding: 14px 24px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{
+    font-weight:900; font-size: 1.25rem; letter-spacing: .02em;
+    display:flex; align-items:center; gap:8px;
+  }
+  .brand .mark{
+    width: 30px; height:30px; border-radius: 50% 50% 50% 6px;
+    background: var(--marigold);
+    display:flex; align-items:center; justify-content:center;
+    font-size: 15px; transform: rotate(-6deg);
+  }
+  nav ul{
+    list-style:none; display:flex; gap: 28px; margin:0; padding:0;
+    font-size: .92rem; font-weight:500;
+  }
+  nav a{ text-decoration:none; color: var(--ink-soft); position:relative; padding-bottom:4px; }
+  nav a:hover{ color: var(--ink); }
+  nav a.current{ color: var(--marigold-deep); font-weight:700; }
+  nav a.current::after{
+    content:""; position:absolute; left:0; right:0; bottom:-2px;
+    height:2px; background: var(--marigold-deep); border-radius: 2px;
+  }
+
+  /* ---------- page head ---------- */
+  .page-head{ max-width: 780px; margin: 0 auto; padding: 56px 24px 10px; text-align:center; }
+  .page-head::before{
+    content:""; display:block; width: 60px; height: 3px; border-radius: 2px;
+    background: var(--marigold); margin: 0 auto 24px;
+  }
+  .page-head .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:.8rem; color: var(--herb-deep); font-weight:700;
+    background: rgba(124,140,90,0.14); padding: 6px 14px; border-radius: 999px;
+    margin-bottom: 16px;
+  }
+  .page-head .eyebrow::before{ content:"●"; color: var(--herb); font-size:.6rem; }
+  .page-head h1{ font-size: clamp(1.8rem, 3.4vw, 2.3rem); margin: 0 0 12px; }
+  .page-head p{ color: var(--ink-soft); font-size:.96rem; margin:0 auto; max-width: 50ch; }
+
+  /* ---------- intro / profile ---------- */
+  .profile{
+    max-width: 780px; margin: 48px auto 0; padding: 0 24px;
+    display:grid; grid-template-columns: 160px 1fr; gap: 32px; align-items:start;
+  }
+  .profile .avatar{
+    width: 100%; aspect-ratio:1; border-radius: 50%;
+    background: linear-gradient(145deg, var(--marigold), var(--herb));
+    box-shadow: 0 14px 30px -14px rgba(62,46,30,0.4);
+  }
+  .profile h2{ font-size: 1.2rem; margin: 0 0 4px; }
+  .profile .role{ font-size:.82rem; color: var(--herb-deep); font-weight:700; margin-bottom: 14px; }
+  .profile p{ font-size:.93rem; color: var(--ink-soft); margin: 0 0 14px; }
+
+  /* ---------- quote strip ---------- */
+  .quote{
+    max-width: 620px; margin: 56px auto; padding: 0 24px; text-align:center;
+  }
+  .quote p{
+    font-family:'Shippori Mincho', serif; font-size: 1.2rem; line-height:1.9;
+    color: var(--ink); position:relative;
+  }
+  .quote p::before, .quote p::after{ color: var(--marigold); font-size: 1.1em; }
+  .quote p::before{ content:"「"; }
+  .quote p::after{ content:"」"; }
+
+  /* ---------- policy list ---------- */
+  section.block{ max-width: 780px; margin: 0 auto; padding: 20px 24px 0; }
+  .section-label{
+    font-size:.78rem; font-weight:700; letter-spacing:.1em; color: var(--herb-deep);
+    display:flex; align-items:center; gap:12px; margin-bottom: 20px; text-transform:uppercase;
+  }
+  .section-label::after{ content:""; flex:1; height:1px; background: var(--line); }
+
+  .policy-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
+  .policy{
+    background: var(--paper); border: 1px solid var(--line); border-radius: 10px;
+    padding: 20px 18px;
+  }
+  .policy .ico{ font-size: 1.4rem; margin-bottom: 10px; }
+  .policy h3{ font-size:.95rem; margin: 0 0 6px; }
+  .policy p{ font-size:.83rem; color: var(--ink-soft); margin:0; }
+
+  /* ---------- link cards ---------- */
+  .link-grid{
+    display:grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 20px;
+  }
+  .link-card{
+    display:flex; align-items:center; gap: 14px; text-decoration:none; color: var(--ink);
+    background: var(--paper); border: 1px solid var(--line); border-radius: 10px;
+    padding: 16px 16px; position:relative; overflow:hidden;
+    transition: transform .15s ease, border-color .15s ease;
+  }
+  .link-card::before{
+    content:""; position:absolute; left:0; top:0; bottom:0; width:3px;
+    background: var(--marigold);
+  }
+  .link-card:hover{ transform: translateY(-2px); border-color: rgba(231,162,59,0.55); }
+  .link-icon{
+    width: 40px; height:40px; border-radius: 8px; flex-shrink:0;
+    background: rgba(231,162,59,0.14); display:flex; align-items:center; justify-content:center;
+    font-size: 1.2rem;
+  }
+  .link-text{ min-width:0; }
+  .link-name{ display:block; font-weight:700; font-size:.9rem; margin-bottom:2px; }
+  .link-desc{ display:block; font-size:.76rem; color: var(--ink-soft); }
+  .link-arrow{ margin-left:auto; color: var(--marigold-deep); font-size:1.1rem; flex-shrink:0; }
+
+  /* ---------- contact form ---------- */
+  .form-card{
+    background: var(--paper); border: 1px solid var(--line); border-radius: 14px;
+    padding: 30px 30px 32px; margin: 8px 0 20px; position:relative; overflow:hidden;
+  }
+  .form-card::before{
+    content:""; position:absolute; left:0; top:0; bottom:0; width:4px; background: var(--marigold);
+  }
+  .form-intro{ font-size:.88rem; color: var(--ink-soft); margin: 0 0 22px; }
+  .form-group{ margin-bottom: 18px; }
+  .form-label{
+    display:block; font-size:.8rem; font-weight:700; color: var(--herb-deep);
+    letter-spacing:.03em; margin-bottom: 7px;
+  }
+  .required{ color: var(--err); font-style:normal; }
+  .form-input, .form-textarea{
+    width:100%; background: var(--cream); border: 1px solid var(--line); border-radius: 8px;
+    color: var(--ink); font-family: inherit; font-size:.92rem; padding: 11px 14px;
+    transition: border-color .2s ease, box-shadow .2s ease; outline:none;
+  }
+  .form-input::placeholder, .form-textarea::placeholder{ color: #A99978; }
+  .form-input:focus, .form-textarea:focus{
+    border-color: var(--marigold); box-shadow: 0 0 0 3px rgba(231,162,59,0.18);
+  }
+  .form-textarea{ resize: vertical; min-height: 130px; }
+  .field-error{ display:block; font-size:.76rem; color: var(--err); margin-top:5px; }
+
+  .form-submit{
+    display:inline-flex; align-items:center; gap:8px;
+    background: var(--marigold); color: var(--paper); border:none; border-radius: 999px;
+    font-family: inherit; font-weight:700; font-size:.92rem; padding: 12px 26px;
+    cursor:pointer; box-shadow: 0 6px 0 var(--marigold-deep); margin-top: 6px;
+    transition: transform .15s ease;
+  }
+  .form-submit:hover{ transform: translateY(-2px); }
+  .form-submit:disabled{ opacity:.55; cursor:not-allowed; transform:none; }
+
+  .form-success{
+    background: rgba(124,140,90,0.14); border: 1px solid rgba(124,140,90,0.4);
+    border-radius: 10px; padding: 16px 20px; text-align:center;
+    color: var(--herb-deep); font-size:.92rem; margin-bottom: 20px;
+  }
+  .form-success-icon{ display:block; font-size: 1.3rem; margin-bottom: 6px; }
+
+  .form-error-global{
+    background: rgba(178,84,84,0.1); border: 1px solid rgba(178,84,84,0.35);
+    border-radius: 10px; padding: 12px 16px; color: var(--err); font-size:.86rem; margin-bottom: 16px;
+  }
+
+  /* ---------- footer ---------- */
+  footer{ background: var(--ink); color: #D9CBB2; margin-top: 40px; }
+  .footer-wrap{
+    max-width: 1080px; margin:0 auto; padding: 56px 24px 30px;
+    display:grid; grid-template-columns: 1.3fr 1fr 1fr 1.2fr; gap: 40px;
+  }
+  footer h4{ font-family:'Zen Maru Gothic', sans-serif; color: #FBF3E1; font-size:.92rem; margin: 0 0 14px; }
+  footer .brand{ color: #FBF3E1; margin-bottom: 10px; }
+  footer p{ font-size:.85rem; color: #B7A88C; margin: 0 0 14px; }
+  footer ul{ list-style:none; margin:0; padding:0; }
+  footer li{ margin-bottom: 9px; }
+  footer a{ color: #D9CBB2; text-decoration:none; font-size:.86rem; }
+  footer a:hover{ color: var(--marigold); }
+
+  .contact-form{ display:flex; flex-direction:column; gap:10px; }
+  .contact-form input, .contact-form textarea{
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 8px; padding: 10px 12px; color: #FBF3E1; font-family: inherit; font-size:.86rem;
+  }
+  .contact-form textarea{ resize: vertical; min-height: 70px; }
+  .contact-form button{
+    background: var(--marigold); color: var(--ink); border:none; border-radius: 999px;
+    padding: 10px 18px; font-weight:700; font-size:.86rem; cursor:pointer; align-self:flex-start;
+  }
+
+  .legal-strip{
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding: 20px 24px 34px; max-width:1080px; margin:0 auto;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    font-size:.76rem; color: #8D7C60;
+  }
+  .ai-notice{ font-size:.76rem; color:#8D7C60; max-width: 640px; }
+
+  .footer-bilingual-note p{ font-size:.78rem; color:#8D7C60; line-height:1.9; margin:0 0 6px; }
+
+  @media (max-width: 880px){
+    nav ul{ display:none; }
+    .profile{ grid-template-columns: 96px 1fr; }
+    .policy-grid{ grid-template-columns: 1fr; }
+    .link-grid{ grid-template-columns: 1fr; }
+    .footer-wrap{ grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px){
+    .form-card{ padding: 24px 20px; }
+    .footer-wrap{ grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce){ *{ scroll-behavior:auto !important; } }
+
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+    outline: 2px solid var(--herb-deep); outline-offset: 2px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-wrap">
+    <div class="brand"><span class="mark">🍚</span>台所の記録帳</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">きろく</a></li>
+        <li><a href="blog.html">にっき</a></li>
+        <li><a href="column.html">コラム</a></li>
+        <li><a href="about.html" class="current">about</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <div class="page-head">
+    <span class="eyebrow">ABOUT</span>
+    <h1>このノートについて</h1>
+    <p>誰かに教えるためのレシピ集ではなく、自分の台所の変化を残すための、ひとりぶんの記録帳です。</p>
+  </div>
+
+  <div class="profile">
+    <div class="avatar"></div>
+    <div>
+      <h2>Azalea72</h2>
+      <p class="role">運営・記録係</p>
+      <p>普段は絵を描いたり漫画を作ったりしています。台所に立つ時間もそれと同じくらい大事にしたくて、この記録帳を始めました。</p>
+      <p>レシピの正確さより、「その日どう感じたか」「次はどうしたいか」を残すことを優先しています。うまくいかなかった日の記録も、そのまま書くようにしています。</p>
+    </div>
+  </div>
+
+  <div class="quote">
+    <p>レシピを探す場所じゃなくて、台所の変化を眺め返す場所にしたい</p>
+  </div>
+
+  <section class="block">
+    <div class="section-label">このサイトの考え方</div>
+    <div class="policy-grid">
+      <div class="policy">
+        <div class="ico">📝</div>
+        <h3>記録が主役</h3>
+        <p>完成レシピよりも、作った過程とそのときの気づきを残すことを優先しています。</p>
+      </div>
+      <div class="policy">
+        <div class="ico">🌱</div>
+        <h3>失敗も残す</h3>
+        <p>うまくいかなかった日の記録も、あとで読み返す価値があると考えています。</p>
+      </div>
+      <div class="policy">
+        <div class="ico">🕊️</div>
+        <h3>マイペースに</h3>
+        <p>毎日更新は目指さず、気が向いたときに書き足していくスタイルです。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="section-label">ほかの場所</div>
+    <div class="link-grid">
+
+      <a class="link-card" href="https://azaleacreativeroom888.github.io/" target="_blank" rel="noopener">
+        <div class="link-icon">🌸</div>
+        <div class="link-text">
+          <span class="link-name">Azalea Creative Room</span>
+          <span class="link-desc">漫画・イラストの本拠地</span>
+        </div>
+        <span class="link-arrow">›</span>
+      </a>
+
+      <a class="link-card" href="https://kakuyomu.jp/" target="_blank" rel="noopener">
+        <div class="link-icon">✒️</div>
+        <div class="link-text">
+          <span class="link-name">カクヨム</span>
+          <span class="link-desc">小説を掲載中</span>
+        </div>
+        <span class="link-arrow">›</span>
+      </a>
+
+      <a class="link-card" href="https://www.pixiv.net/" target="_blank" rel="noopener">
+        <div class="link-icon">🎨</div>
+        <div class="link-text">
+          <span class="link-name">Pixiv</span>
+          <span class="link-desc">イラストを掲載中</span>
+        </div>
+        <span class="link-arrow">›</span>
+      </a>
+
+      <a class="link-card" href="https://www.youtube.com/" target="_blank" rel="noopener">
+        <div class="link-icon">🎬</div>
+        <div class="link-text">
+          <span class="link-name">YouTube（リリポピ）</span>
+          <span class="link-desc">動画チャンネル</span>
+        </div>
+        <span class="link-arrow">›</span>
+      </a>
+
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="section-label">お便り</div>
+
+    <div class="form-card">
+      <p class="form-intro">感想や質問など、お気軽にどうぞ。内容を確認のうえ、可能な範囲でお返事します。</p>
+
+      <div data-fs-success class="form-success" style="display:none;">
+        <span class="form-success-icon">✦</span>
+        <p>メッセージを送信しました。ありがとうございます。</p>
+      </div>
+
+      <div data-fs-error class="form-error-global" style="display:none;"></div>
+
+      <form id="contact-form" action="https://formspree.io/f/maqvpvoz" method="POST">
+
+        <div class="form-group">
+          <label class="form-label" for="name">お名前</label>
+          <input class="form-input" type="text" id="name" name="name" placeholder="お名前">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email">メールアドレス <span class="required">*</span></label>
+          <input class="form-input" type="email" id="email" name="email" data-fs-field placeholder="example@email.com" required>
+          <span data-fs-error="email" class="field-error"></span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="message">メッセージ <span class="required">*</span></label>
+          <textarea class="form-textarea" id="message" name="message" data-fs-field placeholder="感想や質問など" rows="6" required></textarea>
+          <span data-fs-error="message" class="field-error"></span>
+        </div>
+
+        <button class="form-submit" type="submit" data-fs-submit-btn>送信する</button>
+
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-wrap">
+    <div>
+      <div class="brand" style="display:flex;align-items:center;gap:8px;font-weight:900;font-size:1.05rem;">
+        <span class="mark" style="width:26px;height:26px;font-size:13px;">🍚</span>台所の記録帳
+      </div>
+      <p>毎日の食卓と、うまくいった料理・いかなかった料理の記録。ひとりぶんの台所ノートです。</p>
+    </div>
+    <div>
+      <h4>ページ</h4>
+      <ul>
+        <li><a href="index.html">きろく（トップ）</a></li>
+        <li><a href="blog.html">にっき</a></li>
+        <li><a href="column.html">コラム</a></li>
+        <li><a href="about.html">about</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>ほかの場所</h4>
+      <ul>
+        <li><a href="https://azaleacreativeroom888.github.io/" target="_blank" rel="noopener">Azalea Creative Room</a></li>
+        <li><a href="https://kakuyomu.jp/" target="_blank" rel="noopener">Kakuyomu（小説）</a></li>
+        <li><a href="https://www.pixiv.net/" target="_blank" rel="noopener">Pixiv（イラスト）</a></li>
+        <li><a href="https://www.youtube.com/" target="_blank" rel="noopener">YouTube（リリポピ）</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>お便り</h4>
+      <form class="contact-form" action="https://formspree.io/f/maqvpvoz" method="POST">
+        <input type="text" name="name" placeholder="お名前" required>
+        <input type="email" name="email" placeholder="メールアドレス" required>
+        <textarea name="message" placeholder="感想や質問など" required></textarea>
+        <button type="submit">送信する</button>
+      </form>
+    </div>
+  </div>
+  <div class="legal-strip">
+    <span>© 2026 台所の記録帳 / Azalea Creative Room</span>
+    <span class="ai-notice">当サイトのテキスト・写真・イラストはAIの学習データとしての利用を禁止します。</span>
+  </div>
+</footer>
+
+<script>
+  window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+  formspree('initForm', { formElement: '#contact-form', formId: 'maqvpvoz' });
+</script>
+<script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+
+</body>
+</html>
